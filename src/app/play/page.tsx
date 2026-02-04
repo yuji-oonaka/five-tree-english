@@ -1,13 +1,27 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { useConversation } from "@/hooks/useConversation";
-import { cafeScenario } from "@/data/scenarios/cafe";
+import { getScenarioById } from "@/data/scenarios";
 import { playEnglishText } from "@/utils/speech";
 
 export default function PlayPage() {
+  const searchParams = useSearchParams();
+  const scenarioId = searchParams.get("id");
+
+  // シナリオをIDから取得
+  const scenario = useMemo(
+    () => getScenarioById(scenarioId || "cafe-001"),
+    [scenarioId],
+  );
+
+  // scenario が undefined の場合のガード（安全策）
+  if (!scenario) return <div>Scenario not found.</div>;
+
+  // hooksの呼び出し（前回と同じ）
   const { currentNode, choices, selectChoice, isEnd, reset } =
-    useConversation(cafeScenario);
+    useConversation(scenario);
 
   // ノードが変わるたびに音声を再生
   useEffect(() => {
