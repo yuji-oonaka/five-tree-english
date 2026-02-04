@@ -7,6 +7,7 @@ import { useConversation } from "@/hooks/useConversation";
 import { getScenarioById } from "@/data/scenarios";
 import { playEnglishText } from "@/utils/speech";
 import ConversationReflection from "@/components/ConversationReflection";
+import Avatar from "@/components/Avatar";
 
 function PlayContent() {
   const searchParams = useSearchParams();
@@ -60,6 +61,11 @@ function PlayContent() {
             </div>
 
             <div className="min-h-64 flex flex-col items-center justify-center text-center space-y-6">
+              <Avatar
+                speaker={currentNode.speaker}
+                className="w-16 h-16 mb-2 border-2 border-white ring-4 ring-slate-50"
+              />
+
               <div
                 className={`text-xs font-bold px-4 py-1 rounded-full tracking-widest ${
                   currentNode.speaker === "user"

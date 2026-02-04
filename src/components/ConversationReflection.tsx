@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ConversationNode } from "@/types/conversation";
 import { playEnglishText } from "@/utils/speech";
+import Avatar from "@/components/Avatar";
 
 interface Props {
   history: ConversationNode[];
@@ -36,15 +37,17 @@ export default function ConversationReflection({
         </button>
       </div>
 
-      <div className="space-y-4 mb-8">
-        {allNodes.map((node, index) => (
+      <div className="space-y-6 mb-8">
+        {allNodes.map((node) => (
           <div
             key={node.id}
-            className={`flex flex-col ${node.speaker === "user" ? "items-end" : "items-start"}`}
+            className={`flex items-end gap-2 ${node.speaker === "user" ? "flex-row-reverse" : "flex-row"}`}
           >
+            <Avatar speaker={node.speaker} className="w-10 h-10 shrink-0" />
+
             <div
-              onClick={() => playEnglishText(node.textEN, node.speaker)} // node.speaker を追加
-              className={`max-w-[85%] p-4 rounded-2xl cursor-pointer hover:opacity-80 transition-opacity ${
+              onClick={() => playEnglishText(node.textEN, node.speaker)}
+              className={`max-w-[75%] p-4 rounded-2xl cursor-pointer hover:opacity-80 transition-opacity ${
                 node.speaker === "user"
                   ? "bg-blue-600 text-white rounded-tr-none"
                   : "bg-white border-2 border-slate-200 text-slate-800 rounded-tl-none"
