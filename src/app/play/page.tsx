@@ -1,21 +1,29 @@
 "use client";
 
+import { useEffect } from "react";
 import { useConversation } from "@/hooks/useConversation";
 import { cafeScenario } from "@/data/scenarios/cafe";
+import { playEnglishText } from "@/utils/speech";
 
 export default function PlayPage() {
   const { currentNode, choices, selectChoice, isEnd, reset } =
     useConversation(cafeScenario);
 
+  // ノードが変わるたびに音声を再生
+  useEffect(() => {
+    if (currentNode && !isEnd) {
+      playEnglishText(currentNode.textEN);
+    }
+  }, [currentNode, isEnd]);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-slate-50">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl overflow-hidden p-8">
-        {/* ヘッダー・進捗 */}
+        {/* ヘッダー・進捗  */}
         <div className="text-sm text-slate-400 mb-4 text-center">
           Turn: {currentNode.turn} / 5
         </div>
-
-        {/* メイン会話エリア */}
+        {/* メイン会話エリア  */}
         <div className="min-h-50 flex flex-col items-center justify-center text-center space-y-4">
           <div
             className={`text-xs font-bold px-3 py-1 rounded-full ${
@@ -29,9 +37,16 @@ export default function PlayPage() {
           <h2 className="text-3xl font-bold text-slate-800 leading-tight">
             {currentNode.textEN}
           </h2>
+          {/* 再生ボタン（ここを修正しました） */}
+          <button
+            onClick={() => playEnglishText(currentNode.textEN)}
+            className="p-2 rounded-full bg-slate-100 hover:bg-slate-200 transition-colors"
+            title="Listen again"
+          >
+            <span className="text-xl">🔊</span>
+          </button>
           <p className="text-slate-500 italic">「{currentNode.textJP}」</p>
         </div>
-
         {/* 選択肢・操作エリア */}
         <div className="mt-12 space-y-3">
           {!isEnd ? (
