@@ -43,7 +43,7 @@ export default function ConversationReflection({
             className={`flex flex-col ${node.speaker === "user" ? "items-end" : "items-start"}`}
           >
             <div
-              onClick={() => playEnglishText(node.textEN)}
+              onClick={() => playEnglishText(node.textEN, node.speaker)} // node.speaker を追加
               className={`max-w-[85%] p-4 rounded-2xl cursor-pointer hover:opacity-80 transition-opacity ${
                 node.speaker === "user"
                   ? "bg-blue-600 text-white rounded-tr-none"
