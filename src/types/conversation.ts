@@ -1,17 +1,34 @@
-export type Speaker = 'user' | 'pc';
+// 役割の定義
+export type UserRoleType = 'roleA' | 'roleB';
 
-export interface ConversationNode {
-  id: string;               // ノード識別子 
-  textJP: string;           // 日本語の選択肢 
-  textEN: string;           // 英語の音声・テキスト 
-  speaker: Speaker;         // 発話者 
-  nextIds: string[];        // 分岐先のIDリスト（最大3つ程度） 
-  turn: number;             // 1〜5ターンのカウント 
-  isEnd?: boolean;          // 5ターン完結フラグ 
+// 選択肢の定義（エラーの原因：これが漏れていました）
+export interface Choice {
+  id: string;
+  textEN: string;
+  textJP: string;
+  nextNodeId: string; // 次に進む先のノードID
 }
 
+// 会話の1ステップの定義
+export interface ConversationNode {
+  id: string;
+  turn: number;
+  speaker: UserRoleType;
+  textEN: string;
+  textJP: string;
+  choices: Choice[];
+  isEnd?: boolean;
+}
+
+// シナリオ全体の定義
 export interface Scenario {
   id: string;
-  title: string;            // シチュエーション名 
-  nodes: Record<string, ConversationNode>;
+  title: string;
+  roleLabels: {
+    roleA: string;
+    roleB: string;
+  };
+  // 役割によってスタート地点を変える場合に対応
+  initialNodeId: Record<UserRoleType, string>;
+  nodes: ConversationNode[];
 }

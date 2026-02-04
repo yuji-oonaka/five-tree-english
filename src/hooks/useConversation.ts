@@ -1,25 +1,20 @@
 import { useState, useCallback, useMemo } from 'react';
-import { ConversationNode, Scenario } from '@/types/conversation';
+import { Scenario, ConversationNode, UserRoleType } from '@/types/conversation';
 
-export const useConversation = (scenario: Scenario) => {
-  // 現在どのノードにいるかを管理
-  const [currentNodeId, setCurrentNodeId] = useState<string>('start');
-  // 振り返り用に、これまでの会話履歴を保存
+export const useConversation = (scenario: Scenario, userRole: UserRoleType) => {
+  // 現在のノードIDを管理（初期値は選んだ役割のスタート地点）
+  const [currentNodeId, setCurrentNodeId] = useState(scenario.initialNodeId[userRole]);
   const [history, setHistory] = useState<ConversationNode[]>([]);
 
   // 現在のノードオブジェクトを取得
-  const currentNode = useMemo(() => 
-    scenario.nodes[currentNodeId], 
-    [scenario, currentNodeId]
-  );
+  const currentNode = useMemo(() => {
+    return scenario.nodes.find(node => node.id === currentNodeId)!;
+  }, [scenario.nodes, currentNodeId]);
 
-  // 次の選択肢（ノード）のリストを取得
-  const choices = useMemo(() => 
-    currentNode.nextIds.map(id => scenario.nodes[id]),
-    [scenario, currentNode]
-  );
+  // 現在の選択肢を取得
+  const choices = currentNode.choices;
 
-  // 選択肢を選んだ時の処理
+  // 次のステップへ進む関数（idにstring型を明示）
   const selectChoice = useCallback((nextNodeId: string) => {
     setHistory(prev => [...prev, currentNode]);
     setCurrentNodeId(nextNodeId);
@@ -27,16 +22,16 @@ export const useConversation = (scenario: Scenario) => {
 
   // 最初からやり直す
   const reset = useCallback(() => {
-    setCurrentNodeId('start');
+    setCurrentNodeId(scenario.initialNodeId[userRole]);
     setHistory([]);
-  }, []);
+  }, [scenario, userRole]);
 
   return {
     currentNode,
     choices,
     selectChoice,
     history,
-    reset,
-    isEnd: currentNode.isEnd || currentNode.turn >= 5 // 5ターン完結の保証 
+    isEnd: currentNode.isEnd || false,
+    reset
   };
 };
