@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+---
 
-First, run the development server:
+# 🌳 Five Tree English (v0.1.1 Prototype)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+> **「英語を勉強する」前に、「英語を話すハードル」を壊す。**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Five Tree English は、英語を「理解」するための教材ではありません。
+決まった場面で、決まったセリフを、自分の意思で選んで声に出す。
+演劇の稽古のように英語を身体に染み込ませるための**「英語体験シミュレーター」**です。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 💎 プロダクトのあり方（Philosophy）
 
-## Learn More
+多くの英語学習者が突き当たる「間違えるのが怖い」「咄嗟に言葉が出ない」という心理的障壁を、以下の 3 つのアプローチで解消します。
 
-To learn more about Next.js, take a look at the following resources:
+1. **「理解」より「身体化」**:
+文法解説は一切行いません。その代わり、特定のシチュエーションで「この音が口から出る」という筋肉の記憶（マッスルメモリー）の構築に特化します。
+2. **「暗記」の肯定**:
+あえて「台本のある芝居」をなぞることで、ユーザーから「何と言えばいいか迷う」ストレスを取り除き、発声そのものに集中させます。
+3. **「体験」の積み上げ**:
+正誤判定に怯えるのではなく、「自分の声で会話が進んだ」という成功体験を積み上げ、英語で口を開くことへの抵抗感をゼロにします。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 主要機能 (Features)
 
-## Deploy on Vercel
+### 🎭 2-Step 会話エンジン
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* **Step 1: Flow Learning（台本作り）**:
+日本語の選択肢を選びながら、会話の全体像と流れを把握します。ここで選んだ分岐はシステムに記憶されます。
+* **Step 2: Real Experience（本番演習）**:
+Step 1 で自分が作った「台本」通りに会話を再現します。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🧠 能動的想起（Active Recall）UI
+
+* **5秒間の隠蔽**: 自分の番が来ると英文が 5 秒間隠されます。脳に「さっき何と言ったか」を思い出させる負荷を与えます。
+* **オート・ミュート**: 自分の番ではお手本音声が自動で流れません。「聞こえた音を真似る」のではなく「自力で声を出す」ことを促します。
+* **5ターン目の完遂**: 最後の一言を喋り終えるまでマイクを表示し続け、中途半端な終了を防ぎます。
+
+### 🔊 役割に応じた音声合成
+
+* `roleA`（客）と `roleB`（店員）に対し、OS 標準の音声から最適な性別・ピッチを自動割り当てし、対話の没入感を高めます。
+
+---
+
+## 🛠 技術スタック (Tech Stack)
+
+* **Framework**: Next.js 15+ (App Router)
+* **Language**: TypeScript (完全型定義)
+* **Animation**: Framer Motion
+* **Styling**: Tailwind CSS
+* **API**: Web Speech API (Speech Recognition / Synthesis)
+
+---
+
+## 📅 ロードマップ (Future Roadmap)
+
+* [ ] **Visual Overhaul**: カフェ、空港、ホテル等の背景画像実装による没入感向上。
+* [ ] **Emotional Feedback**: 会話内容に応じたアバターの表情変化（喜・驚・頷き）。
+* [ ] **Ambient Sound**: 場面に応じた環境音（雑踏、食器の音）の追加。
+* [ ] **Scene Expansion**: 日常生活からビジネスシーンまで、ツリー構造の追加。
+
+---
+
+## 📜 License & Copyright
+
+Copyright (c) 2024-2026 **yuji-oonaka** (Five Tree English Project).
+All rights reserved.
+
+> 本プロジェクトの設計思想およびソースコードは yuji-oonaka に帰属します。
+
+---
+
+### 最後に
+
+このプロジェクトは、**「英語を話せるようになる」アプリではなく、「英語で会話する“場”を疑似体験する」装置**です。教科書にはなれなくても、誰かが英語で最初の一歩を踏み出すための「稽古場」になることを目指しています。
+
+---
